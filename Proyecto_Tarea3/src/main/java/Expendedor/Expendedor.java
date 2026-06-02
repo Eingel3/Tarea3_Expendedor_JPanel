@@ -2,6 +2,7 @@ package Expendedor;
 
 import Monedas.*;
 import Productos.*;
+import java.util.ArrayList;
 
 /**
  *  Clase que representa un expendedor de productos.
@@ -36,30 +37,25 @@ public class Expendedor {
 
         monedaDeposito = new Deposito<Moneda>();
 
-        for (int i = 0; i<cantidad; i++){
-            CocaCola temp = new CocaCola(1100+i);
-            coca.addObjeto(temp);
-        }
-        for (int i = 0; i<cantidad; i++){
-            Sprite temp = new Sprite(1200+i);
-            sprite.addObjeto(temp);
-        }
-        for (int i = 0; i<cantidad; i++){
-            Fanta temp = new Fanta(1300+i);
-            fanta.addObjeto(temp);
-        }
-        for (int i = 0; i<cantidad; i++){
-            Super8 temp = new Super8(2100+i);
-            super8.addObjeto(temp);
-        }
-        for (int i = 0; i<cantidad; i++){
-            Snicker temp = new Snicker(2200+i);
-            snicker.addObjeto(temp);
-        }
+        //LLenamos los depositos segun la cantidad de productos solicitada
+        llenarExpendedor(cantidad);
 
 	}
 
-    
+    /**
+     * Llena los depósitos con la cantidad de productos indicada.
+     * La serie de cada producto depende del tipo del producto contenido en el enum informacionProducto y
+     * tambien depende de el numero del producto creado, es decir, el numero de la iteracion del ciclo for
+     */
+    private void llenarExpendedor(int cantProducto){
+        for(int i = 0; i < cantProducto; i++){
+            coca.addObjeto(new CocaCola(InformacionProducto.COCACOLA.getTipo()*100 + i));
+            fanta.addObjeto(new Fanta(InformacionProducto.FANTA.getTipo()*100 + i));
+            sprite.addObjeto(new Sprite(InformacionProducto.SPRITE.getTipo()*100 + i));
+            snicker.addObjeto(new Snicker(InformacionProducto.SNICKER.getTipo()*100 + i));
+            super8.addObjeto(new Super8(InformacionProducto.SUPER8.getTipo()*100 + i));
+        }
+    }
 
     /**
      *
