@@ -2,6 +2,7 @@ package Expendedor;
 
 import Monedas.*;
 import Productos.*;
+import Excepciones.*;
 import java.util.ArrayList;
 
 /**
@@ -197,21 +198,6 @@ public class Expendedor {
         return monedaDeposito.getObjeto();
         }
     }
-// Abajo estan las excepciones
-    class NoHayProductoException extends Exception {
-        public NoHayProductoException(String mensajeError0){
-            super(mensajeError0);
-        }
-    }
-    class PagoIncorrectoException extends Exception {
-        public PagoIncorrectoException(){
-            super("La moneda con la que desea pagar es incorrecta. Pague con una moneda valida.");
-        }
-    }
-    class PagoInsuficienteException extends Exception {
-        public PagoInsuficienteException(String mensajeError){ 
-        super(mensajeError);
-        }
-    }
+
 
 }
