@@ -5,9 +5,19 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa la vista grafica de un deposito dentro del expendedor.
+ *
+ * <p>Este panel puede mostrar productos o monedas visibles en la maquina,
+ * dibujar su contenedor y reposicionar automaticamente el contenido cuando
+ * cambian las coordenadas o la cantidad de elementos.</p>
+ */
 public class PanelDeposito {
 
+    /** Padding interno para separar contenido del borde. */
     private static final int PADDING = 6;
+
+    /** Espacio horizontal/vertical entre elementos internos. */
     private static final int ESPACIADO = 4;
 
     private int x;
@@ -17,14 +27,33 @@ public class PanelDeposito {
 
     private String etiqueta;
 
-    //productos disponibles o visibles en la maquina
+    /** Productos disponibles o visibles en la maquina. */
     private final List<VistaProducto> productos;
+
+    /** Monedas disponibles o visibles en la maquina. */
     private final List<VistaMoneda> monedas;
 
+    /**
+     * Construye un deposito con etiqueta por defecto.
+     *
+     * @param x coordenada horizontal inicial
+     * @param y coordenada vertical inicial
+     * @param ancho ancho del deposito
+     * @param alto alto del deposito
+     */
     public PanelDeposito(int x, int y, int ancho, int alto) {
         this(x, y, ancho, alto, "Deposito");
     }
 
+    /**
+     * Construye un deposito con etiqueta personalizada.
+     *
+     * @param x coordenada horizontal inicial
+     * @param y coordenada vertical inicial
+     * @param ancho ancho del deposito
+     * @param alto alto del deposito
+     * @param etiqueta texto identificador del deposito
+     */
     public PanelDeposito(int x, int y, int ancho, int alto, String etiqueta) {
         this.x = x;
         this.y = y;
@@ -35,46 +64,71 @@ public class PanelDeposito {
         this.monedas = new ArrayList<>();
     }
 
-
-    //este metodo dibuja el deposito completo
+    /**
+     * Dibuja el deposito completo: fondo, borde, etiqueta y contenido.
+     *
+     * <p>El pintado de productos y monedas se delega a sus respectivas clases
+     * de vista.</p>
+     *
+     * @param g contexto grafico de Swing/AWT
+     */
     public void paintComponent(Graphics g) {
-        g.setColor(new Color(210, 210, 210));//color gris
-        g.fillRect(x, y, ancho, alto);//Background o fondo
-        g.setColor(Color.DARK_GRAY);//Color
-        g.drawRect(x, y, ancho, alto);//Borde
+        g.setColor(new Color(210, 210, 210));
+        g.fillRect(x, y, ancho, alto);
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect(x, y, ancho, alto);
 
-        g.drawString(etiqueta, x + 8, y + 16);//Texto
+        g.drawString(etiqueta, x + 8, y + 16);
 
-        //dibuja productos
         for (VistaProducto producto : productos) {
-            //aca el deposito delega el pintado del producto a la vistaProducto
             producto.paint(g);
         }
 
         for (VistaMoneda moneda : monedas) {
-            //lo mismo con la moneda
             moneda.paint(g);
         }
     }
 
-    //mueve el deposito
+    /**
+     * Reposiciona el deposito y reorganiza su contenido interno.
+     *
+     * @param x nueva coordenada horizontal
+     * @param y nueva coordenada vertical
+     */
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
-        //se llama a reflow para que tambien se muevan los depositos interiores
         reflowContenido();
     }
 
-    //revisa si el click sucedio
+    /**
+     * Verifica si un punto cae dentro del area del deposito.
+     *
+     * @param px coordenada horizontal del punto
+     * @param py coordenada vertical del punto
+     * @return true si el punto esta dentro del deposito, false si no
+     */
     public boolean contains(int px, int py) {
         return px >= x && px <= (x + ancho) && py >= y && py <= (y + alto);
     }
 
+    /**
+     * Actualiza la etiqueta mostrada en el deposito.
+     *
+     * @param etiqueta nuevo texto de la etiqueta
+     */
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
 
-    //modifica los productos limpiando o eliminando los anteriores
+    /**
+     * Reemplaza los productos visibles del deposito.
+     *
+     * <p>Primero limpia productos anteriores, elimina monedas visibles y luego
+     * reposiciona automaticamente el nuevo contenido.</p>
+     *
+     * @param nuevosProductos lista de productos a mostrar
+     */
     public void setProductos(List<VistaProducto> nuevosProductos) {
         productos.clear();
         if (nuevosProductos != null) {
@@ -84,7 +138,14 @@ public class PanelDeposito {
         reflowContenido();
     }
 
-    //lo mismo con las monedas
+    /**
+     * Reemplaza las monedas visibles del deposito.
+     *
+     * <p>Primero limpia monedas anteriores, elimina productos visibles y luego
+     * reposiciona automaticamente el nuevo contenido.</p>
+     *
+     * @param nuevasMonedas lista de monedas a mostrar
+     */
     public void setMonedas(List<VistaMoneda> nuevasMonedas) {
         monedas.clear();
         if (nuevasMonedas != null) {
@@ -94,7 +155,12 @@ public class PanelDeposito {
         reflowContenido();
     }
 
-    //metodo que reposiciona elementos comprobando que entren en una liena si no hace un salto
+    /**
+     * Reposiciona productos/monedas en filas dentro del deposito.
+     *
+     * <p>Si un elemento no entra en la linea actual, realiza salto a la
+     * siguiente fila para mantener el contenido dentro del panel.</p>
+     */
     public void reflowContenido() {
         int inicioX = x + PADDING;
         int inicioY = y + 22;
@@ -128,29 +194,56 @@ public class PanelDeposito {
         }
     }
 
-
-    //GETTERS
-
+    /**
+     * Obtiene la cantidad de productos visibles en el deposito.
+     *
+     * @return cantidad de productos
+     */
     public int getCantidadProductos() {
         return productos.size();
     }
 
+    /**
+     * Obtiene la cantidad de monedas visibles en el deposito.
+     *
+     * @return cantidad de monedas
+     */
     public int getCantidadMonedas() {
         return monedas.size();
     }
 
+    /**
+     * Obtiene la coordenada horizontal del deposito.
+     *
+     * @return coordenada x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Obtiene la coordenada vertical del deposito.
+     *
+     * @return coordenada y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Obtiene el ancho del deposito.
+     *
+     * @return ancho en pixeles
+     */
     public int getAncho() {
         return ancho;
     }
 
+    /**
+     * Obtiene el alto del deposito.
+     *
+     * @return alto en pixeles
+     */
     public int getAlto() {
         return alto;
     }
