@@ -196,5 +196,8 @@ public class Expendedor {
         }
     }
 
+    public Producto getProducto(){
+        return depositoCompra;
+    }
 
 }
