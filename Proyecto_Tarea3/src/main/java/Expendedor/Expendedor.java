@@ -80,7 +80,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SPRITE.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SPRITE.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (sprite.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -88,6 +87,7 @@ public class Expendedor {
             }
             else { //Quedan productos, entonces compramos un producto
                 depositoCompra.addObjeto(sprite.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SPRITE.getPrecio();
             }
         }
         break; //Del caso sprite
@@ -99,7 +99,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.FANTA.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.FANTA.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (fanta.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -107,6 +106,7 @@ public class Expendedor {
             }
             else { //Quedan productos, entonces compramos un producto
                 depositoCompra.addObjeto(fanta.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.FANTA.getPrecio();
             }
         }
         break;
@@ -119,7 +119,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.COCACOLA.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.COCACOLA.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (coca.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -128,6 +127,8 @@ public class Expendedor {
             }
             else { //Quedan productos, entonces compramos un producto
                 depositoCompra.addObjeto(coca.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.COCACOLA.getPrecio();
+
             }
         }
         break;
@@ -140,7 +141,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SNICKER.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SNICKER.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (snicker.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -149,6 +149,8 @@ public class Expendedor {
             }
             else { //Quedan productos, entonces compramos un producto
                 depositoCompra.addObjeto(snicker.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SNICKER.getPrecio();
+
             }
         }
         break;
@@ -162,7 +164,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SUPER8.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SUPER8.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (super8.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -171,6 +172,8 @@ public class Expendedor {
             }
             else { //Quedan productos, entonces compramos un producto
                 depositoCompra.addObjeto(super8.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SUPER8.getPrecio();
+                
             }
         }
         break;
