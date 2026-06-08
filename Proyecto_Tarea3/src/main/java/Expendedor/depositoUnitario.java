@@ -4,7 +4,7 @@ package Expendedor;
  *
  * @param <T> tipo de objeto que guarda el depósito
  */
-public class depositoUnitario<T> extends Deposito {
+public class depositoUnitario<T> extends Deposito<T> {
     /**
      * objeto es un deposito especial con capacidad de un unico objeto
      */
