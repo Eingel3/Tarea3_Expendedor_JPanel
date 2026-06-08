@@ -6,3 +6,9 @@ Tarea 3 de la asignatura de desarrollo orientado a objetos, hecha íntegramente 
 - Bastian Wladimir Vásquez Villarroel
 - Benjamin Saavedra Uribe
 - Maximiliano Agustín Guerrero Zambrano
+
+
+#Diagrama UML:
+
+
+Link al diseño en la página web de canva.com: https://canva.link/771zeideb9yazi6
