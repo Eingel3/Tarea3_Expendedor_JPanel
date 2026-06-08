@@ -1,9 +1,12 @@
 package gui;
 
+
 import java.awt.Graphics;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import Expendedor.Expendedor;
 
 public class PanelExpendedor {
 
