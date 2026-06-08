@@ -18,12 +18,15 @@ public class depositoUnitario<T> extends Deposito {
     }
 
     /**
-     * Getter del objeto que contiene objeto
-     * @return objeto
+     * Getter del objeto que contiene objeto, se guarda el objeto del deposito unitario en una variable auxiliar
+     * Y luego se deja vacío el deposito unitario llamado objeto
+     * @return objetoAuxiliar quien referencia al objeto que estaba contenido en el deposito unitario
      */
     @Override
     public T getObjeto() {
-        return objeto;
+        T objetoAuxiliar = this.objeto;
+        this.objeto = null;
+        return objetoAuxiliar;
     }
 
     /**
