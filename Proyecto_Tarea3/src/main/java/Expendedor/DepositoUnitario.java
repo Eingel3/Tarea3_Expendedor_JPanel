@@ -4,7 +4,7 @@ package Expendedor;
  *
  * @param <T> tipo de objeto que guarda el depósito
  */
-public class depositoUnitario<T> extends Deposito<T> {
+public class DepositoUnitario<T> extends Deposito<T> {
     /**
      * objeto es un deposito especial con capacidad de un unico objeto
      */
@@ -13,7 +13,7 @@ public class depositoUnitario<T> extends Deposito<T> {
     /**
      * Constructor de la clase, uniccamente inicializamos objeto con valor null.
      */
-    public depositoUnitario(){
+    public DepositoUnitario(){
         this.objeto = null;
     }
 
