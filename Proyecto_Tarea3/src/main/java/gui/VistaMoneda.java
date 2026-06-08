@@ -5,6 +5,12 @@ import java.awt.Graphics;
 
 import Monedas.Moneda;
 
+/**
+ * Representa la vista grafica de una moneda en la interfaz.
+ *
+ * <p>Esta clase maneja solo informacion visual (posicion y tamano) junto con
+ * una referencia a la moneda del modelo para mostrar su valor.</p>
+ */
 public class VistaMoneda {
 
     private int x;
@@ -12,10 +18,25 @@ public class VistaMoneda {
     private final int diametro;
     private final Moneda moneda;
 
+    /**
+     * Crea una vista de moneda sin referencia a moneda de logica.
+     *
+     * @param x coordenada horizontal inicial
+     * @param y coordenada vertical inicial
+     * @param diametro diametro visual de la moneda
+     */
     public VistaMoneda(int x, int y, int diametro) {
         this(x, y, diametro, null);
     }
 
+    /**
+     * Crea una vista de moneda asociada a una moneda del modelo.
+     *
+     * @param x coordenada horizontal inicial
+     * @param y coordenada vertical inicial
+     * @param diametro diametro visual de la moneda
+     * @param moneda moneda de logica asociada a la vista
+     */
     public VistaMoneda(int x, int y, int diametro, Moneda moneda) {
         this.x = x;
         this.y = y;
@@ -23,6 +44,13 @@ public class VistaMoneda {
         this.moneda = moneda;
     }
 
+    /**
+     * Dibuja la moneda en el contexto grafico entregado.
+     *
+     * <p>Si existe una moneda asociada, se muestra su valor dentro del circulo.</p>
+     *
+     * @param g contexto grafico de Swing/AWT
+     */
     public void paint(Graphics g) {
         g.setColor(new Color(240, 200, 80));
         g.fillOval(x, y, diametro, diametro);
@@ -34,11 +62,24 @@ public class VistaMoneda {
         }
     }
 
+    /**
+     * Reposiciona la vista de la moneda.
+     *
+     * @param x nueva coordenada horizontal
+     * @param y nueva coordenada vertical
+     */
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Indica si un punto se encuentra dentro del area circular de la moneda.
+     *
+     * @param px coordenada horizontal del punto
+     * @param py coordenada vertical del punto
+     * @return true si el punto esta dentro del circulo, false en caso contrario
+     */
     public boolean contains(int px, int py) {
         int centroX = x + diametro / 2;
         int centroY = y + diametro / 2;
@@ -48,14 +89,21 @@ public class VistaMoneda {
         return (dx * dx + dy * dy) <= (radio * radio);
     }
 
+    /**
+     * Obtiene el diametro visual de la moneda.
+     *
+     * @return diametro en pixeles
+     */
     public int getDiametro() {
         return diametro;
     }
 
+    /**
+     * Obtiene la moneda del modelo asociada a esta vista.
+     *
+     * @return moneda asociada o null si no existe
+     */
     public Moneda getMoneda() {
         return moneda;
     }
-
-
-
 }
