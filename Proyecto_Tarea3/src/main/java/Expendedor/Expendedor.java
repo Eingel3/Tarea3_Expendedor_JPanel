@@ -21,7 +21,7 @@ public class Expendedor {
     private Deposito<Moneda> monedaDeposito;
 
     private int vuelto;
-    private Producto compra;
+    private Producto depositoCompra; //Deposito especial con capacidad de un solo producto
 
     /**
      *
@@ -67,7 +67,7 @@ public class Expendedor {
      * @throws PagoInsuficienteException Pasa cuando la moneda tiene un valor menor al del producto
      * @throws NoHayProductoException Pasa cuando en el deposito no queda del producto deseado
      */
-    public Producto comprarProducto(int tipo, Moneda pago) throws PagoIncorrectoException, PagoInsuficienteException, NoHayProductoException {
+    public void comprarProducto(int tipo, Moneda pago) throws PagoIncorrectoException, PagoInsuficienteException, NoHayProductoException {
         if (pago == null){
             throw new PagoIncorrectoException();}
 
@@ -86,7 +86,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan sprites");
             }
             else { //Quedan productos, entonces compramos un producto
-                compra = sprite.getObjeto();
+                depositoCompra = sprite.getObjeto();
             }
         }
         break; //Del caso sprite
@@ -105,7 +105,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan fantas");
             }
             else { //Quedan productos, entonces compramos un producto
-                compra = fanta.getObjeto();
+                depositoCompra = fanta.getObjeto();
             }
         }
         break;
@@ -126,7 +126,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan cocacolas");
             }
             else { //Quedan productos, entonces compramos un producto
-                compra = coca.getObjeto();
+                depositoCompra = coca.getObjeto();
             }
         }
         break;
@@ -147,7 +147,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan snickers");
             }
             else { //Quedan productos, entonces compramos un producto
-                compra = snicker.getObjeto();
+                depositoCompra = snicker.getObjeto();
             }
         }
         break;
@@ -169,7 +169,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan super8");
             }
             else { //Quedan productos, entonces compramos un producto
-                compra = super8.getObjeto();
+                depositoCompra = super8.getObjeto();
             }
         }
         break;
@@ -180,9 +180,6 @@ public class Expendedor {
     for (int i = 0; i < vuelto/100; i++){
         monedaDeposito.addObjeto(new Moneda100());
         }
-
-    return compra; //Finalmente retornamos el Producto comprado
-
     }
 
     /**
