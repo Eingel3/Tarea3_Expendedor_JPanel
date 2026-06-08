@@ -205,4 +205,36 @@ public class Expendedor {
         return depositoCompra.getObjeto();
     }
 
+    /**
+     * El siguiente metodo está diseñado para ser usado dentro del método comprarProducto
+     * Este metodo recibe una cantidad tipo int, y luego, deposita el vuelto en el deposito de monedas
+     * @param vuelto es la cantidad de vuelto que ha de ser almacenado
+     */
+    public void manejarVuelto(int vuelto){
+
+        /**
+         * Si el vuelto es mas grande que 1000, almacenamos monedas de 1000 hasta que el vuelo sea menor a 1000
+         * cada vez que almacenamos una moneda, sustraemos el valor de dicha moneda alm vuelto
+         */
+        if (vuelto>1000){
+            for (int i = 1000; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda1000());
+                vuelto -= 1000;
+            }
+        }
+        if (vuelto>500){
+            for (int i = 500; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda500());
+                vuelto -= 500;
+            }
+        }
+        if (vuelto>100){
+            for (int i = 100; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda1000());
+                vuelto -= 100;
+            }
+        }
+
+    }
+
 }
