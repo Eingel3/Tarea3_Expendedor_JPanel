@@ -5,20 +5,39 @@ package Expendedor;
  * @param <T> tipo de objeto que guarda el depósito
  */
 public class depositoUnitario<T> extends Deposito {
-
+    /**
+     * objeto es un deposito especial con capacidad de un unico objeto
+     */
     private  T objeto;
-    public depositoUnitario(T objeto){
-        this.objeto = objeto;
+
+    /**
+     * Constructor de la clase, uniccamente inicializamos objeto con valor null.
+     */
+    public depositoUnitario(){
+        this.objeto = null;
     }
 
+    /**
+     * Getter del objeto que contiene objeto
+     * @return objeto
+     */
     @Override
     public T getObjeto() {
         return objeto;
     }
+
+    /**
+     * Setter de la propiedad objeto
+     * @param objeto es el objeto que se quiere depositar en el deposito unitario
+     */
     @Override
     public void addObjeto(T objeto) {
         this.objeto = objeto;
     }
+
+    /**
+     * Metodo que deja el deposito unitario vacio
+     */
     public void eliminarObjeto(){
         this.objeto = null;
     }
