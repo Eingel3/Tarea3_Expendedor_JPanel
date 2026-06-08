@@ -44,6 +44,10 @@ public class Deposito<T>{
         return almacen.remove(0); //Si tiene un objeto, removemos el objeto del almacen y lo retornamos
     }
 
+	/**
+	 * Metodo que indica si el almacen esta vacio
+	 * @return True si almacen está vacío, False si contiene algun objeto
+	 */
 	public boolean isEmpty(){ //Para que otros metodos puedan ver si esta vacio
 		return almacen.isEmpty();
 	}
