@@ -3,7 +3,6 @@ package Expendedor;
 import Monedas.*;
 import Productos.*;
 import Excepciones.*;
-import java.util.ArrayList;
 
 /**
  *  Clase que representa un expendedor de productos.
@@ -21,7 +20,7 @@ public class Expendedor {
     private Deposito<Moneda> monedaDeposito;
 
     private int vuelto;
-    private Producto depositoCompra; //Deposito especial con capacidad de un solo producto
+    private DepositoUnitario<Producto> depositoCompra; //Deposito especial con capacidad de un solo producto
 
     /**
      *
@@ -37,6 +36,8 @@ public class Expendedor {
         super8 = new Deposito<Super8>();
 
         monedaDeposito = new Deposito<Moneda>();
+
+        depositoCompra = new DepositoUnitario();
 
         //LLenamos los depositos segun la cantidad de productos solicitada
         llenarExpendedor(cantidad);
@@ -86,7 +87,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan sprites");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = sprite.getObjeto();
+                depositoCompra.addObjeto(sprite.getObjeto());
             }
         }
         break; //Del caso sprite
@@ -105,7 +106,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan fantas");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = fanta.getObjeto();
+                depositoCompra.addObjeto(fanta.getObjeto());
             }
         }
         break;
@@ -126,7 +127,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan cocacolas");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = coca.getObjeto();
+                depositoCompra.addObjeto(coca.getObjeto());
             }
         }
         break;
@@ -147,7 +148,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan snickers");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = snicker.getObjeto();
+                depositoCompra.addObjeto(snicker.getObjeto());
             }
         }
         break;
@@ -169,7 +170,7 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan super8");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = super8.getObjeto();
+                depositoCompra.addObjeto(super8.getObjeto());
             }
         }
         break;
@@ -196,8 +197,12 @@ public class Expendedor {
         }
     }
 
+    /**
+     * Getter del deposito especial depositoCompra
+     * @return retorna el producto que almacena depositoCompra
+     */
     public Producto getProducto(){
-        return depositoCompra;
+        return depositoCompra.getObjeto();
     }
 
 }
