@@ -4,10 +4,10 @@ package Expendedor;
  *
  * @param <T> tipo de objeto que guarda el depósito
  */
-public class depositoEspecial<T> extends Deposito {
+public class depositoUnitario<T> extends Deposito {
 
     private  T objeto;
-    public depositoEspecial(T objeto){
+    public depositoUnitario(T objeto){
         this.objeto = objeto;
     }
 
