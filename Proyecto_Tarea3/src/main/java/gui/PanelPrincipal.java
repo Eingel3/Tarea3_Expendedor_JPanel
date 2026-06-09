@@ -26,16 +26,23 @@ public class PanelPrincipal extends JPanel implements MouseListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g); //Limpia la pantalla y pinta el fondo blanco
-        exp.paintComponent(g); //Pinta el expendedor (Falta implementar el funcionamiento de exp)
+        exp.paintComponent(g); //Pinta el expendedor
         //com.paintComponent(g); //Pinta el comprador (Falta implementar el funcionamiento de com
     }
 
     @Override
     public void mouseClicked(MouseEvent e){
-        int mouseX = e.getX();
+        int mouseX = e.getX(); //Obtenemos coordenadas del mouse
         int mouseY = e.getY();
 
+        exp.manejarClick(mouseX, mouseY); //Llamamos al metodo manejarClick del expendedor
+
     }
+
+    @Override public void mousePressed(MouseEvent e)  {}
+    @Override public void mouseReleased(MouseEvent e) {}
+    @Override public void mouseEntered(MouseEvent e)  {}
+    @Override public void mouseExited(MouseEvent e)   {}
 }
 
 
