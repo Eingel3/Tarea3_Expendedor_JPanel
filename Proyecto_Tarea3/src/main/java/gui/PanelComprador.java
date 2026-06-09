@@ -317,7 +317,10 @@ public class PanelComprador {
             Moneda devuelta;
             while ((devuelta = expendedor.getVuelto()) != null) { //Recoger todo el vuelto del expendedor
                 dinero          += devuelta.getValor(); //Sumar el vuelto al dinero disponible
+                int vueltoTemp = vueltoAcumulado;
                 vueltoAcumulado += devuelta.getValor(); //Acumular el total de vuelto recibido
+                vueltoTemp = vueltoAcumulado - vueltoTemp;
+                dinero -= vueltoTemp; //Le quitamos al usuario la cantidad de vuelto
             }
             mensaje = "Compra exitosa: " + ultimoProducto
                     + (producto != null ? " #" + producto.getSerie() : ""); //Mostrar nombre y número de serie
