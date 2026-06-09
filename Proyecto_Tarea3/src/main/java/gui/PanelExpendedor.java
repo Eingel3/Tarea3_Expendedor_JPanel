@@ -133,6 +133,38 @@ public class PanelExpendedor {
     }
 
     /**
+     * Maneja un click y retorna el deposito visual seleccionado.
+     *
+     * Este metodo permite delegar el manejo de clicks desde un panel externo
+     * sin exponer la lista interna de depositos.
+     *
+     * @param px coordenada horizontal del click
+     * @param py coordenada vertical del click
+     * @return deposito clickeado o null si no se hizo click en un deposito
+     */
+    public PanelDeposito manejarClick(int px, int py) {
+        if (!contains(px, py)) {
+            return null;
+        }
+
+        for (PanelDeposito deposito : depositos) {
+            if (deposito.contains(px, py)) {
+                return deposito;
+            }
+        }
+
+        if (depositoProductoComprado.contains(px, py)) {
+            return depositoProductoComprado;
+        }
+
+        if (depositoVuelto.contains(px, py)) {
+            return depositoVuelto;
+        }
+
+        return null;
+    }
+
+    /**
      * Actualiza el contenido visual de un deposito de productos por indice.
      *
      * @param indice posicion del deposito dentro de la lista
