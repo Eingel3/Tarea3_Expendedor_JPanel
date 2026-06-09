@@ -3,7 +3,6 @@ package Expendedor;
 import Monedas.*;
 import Productos.*;
 import Excepciones.*;
-import java.util.ArrayList;
 
 /**
  *  Clase que representa un expendedor de productos.
@@ -21,7 +20,7 @@ public class Expendedor {
     private Deposito<Moneda> monedaDeposito;
 
     private int vuelto;
-    private Producto depositoCompra; //Deposito especial con capacidad de un solo producto
+    private DepositoUnitario<Producto> depositoCompra; //Deposito especial con capacidad de un solo producto
 
     /**
      *
@@ -37,6 +36,8 @@ public class Expendedor {
         super8 = new Deposito<Super8>();
 
         monedaDeposito = new Deposito<Moneda>();
+
+        depositoCompra = new DepositoUnitario();
 
         //LLenamos los depositos segun la cantidad de productos solicitada
         llenarExpendedor(cantidad);
@@ -79,14 +80,14 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SPRITE.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SPRITE.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (sprite.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
                 throw new NoHayProductoException("No quedan sprites");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = sprite.getObjeto();
+                depositoCompra.addObjeto(sprite.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SPRITE.getPrecio();
             }
         }
         break; //Del caso sprite
@@ -98,14 +99,14 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.FANTA.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.FANTA.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (fanta.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
                 throw new NoHayProductoException("No quedan fantas");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = fanta.getObjeto();
+                depositoCompra.addObjeto(fanta.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.FANTA.getPrecio();
             }
         }
         break;
@@ -118,7 +119,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.COCACOLA.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.COCACOLA.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (coca.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -126,7 +126,9 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan cocacolas");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = coca.getObjeto();
+                depositoCompra.addObjeto(coca.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.COCACOLA.getPrecio();
+
             }
         }
         break;
@@ -139,7 +141,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SNICKER.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SNICKER.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (snicker.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -147,7 +148,9 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan snickers");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = snicker.getObjeto();
+                depositoCompra.addObjeto(snicker.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SNICKER.getPrecio();
+
             }
         }
         break;
@@ -161,7 +164,6 @@ public class Expendedor {
                 " lo cual es insuficiente, debe de tener un valor de al menos " + InformacionProducto.SUPER8.getPrecio());
         }
         else {
-            vuelto = pago.getValor() - InformacionProducto.SUPER8.getPrecio();
             //Para obtener el objeto, hemos de ver la excepcion NoHayProductoExcepcion
             if (super8.isEmpty()) {
                 monedaDeposito.addObjeto(pago);
@@ -169,7 +171,9 @@ public class Expendedor {
                 throw new NoHayProductoException("No quedan super8");
             }
             else { //Quedan productos, entonces compramos un producto
-                depositoCompra = super8.getObjeto();
+                depositoCompra.addObjeto(super8.getObjeto());
+                vuelto = pago.getValor() - InformacionProducto.SUPER8.getPrecio();
+                
             }
         }
         break;
@@ -177,9 +181,7 @@ public class Expendedor {
 
 
     //Lo siguiente es para manejar el vuelto
-    for (int i = 0; i < vuelto/100; i++){
-        monedaDeposito.addObjeto(new Moneda100());
-        }
+    manejarVuelto(vuelto);
     }
 
     /**
@@ -196,5 +198,59 @@ public class Expendedor {
         }
     }
 
+    /**
+     * Getter del deposito especial depositoCompra
+     * @return retorna el producto que almacena depositoCompra
+     */
+    public Producto getProducto(){
+        return depositoCompra.getObjeto();
+    }
+
+    /**
+     * El siguiente metodo está diseñado para ser usado dentro del método comprarProducto
+     * Este metodo recibe una cantidad tipo int, y luego, deposita el vuelto en el deposito de monedas
+     * @param vuelto es la cantidad de vuelto que ha de ser almacenado
+     */
+    public void manejarVuelto(int vuelto){
+
+        /**
+         * Si el vuelto es mas grande que 2000, almacenamos monedas de 2000 hasta que el vuelo sea menor a 2000
+         * cada vez que almacenamos una moneda, sustraemos el valor de dicha moneda al vuelto
+         */
+        if (vuelto>2000){
+            for (int i = 2000; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda2000());
+                vuelto -= 2000;
+            }
+        }
+        /**
+         * Los demás ciclos de abajo funcionan de forma similar al de arriba, solo que en vez de con 2000, se verifican los otros posibles valores de Monedas
+         */
+        if (vuelto>1000){
+            for (int i = 1000; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda1000());
+                vuelto -= 1000;
+            }
+        }
+
+        if (vuelto>500){
+            for (int i = 500; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda500());
+                vuelto -= 500;
+            }
+        }
+        if (vuelto>100){
+            for (int i = 100; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda100());
+                vuelto -= 100;
+            }
+        }
+        if (vuelto>1){
+            for (int i = 1; i < vuelto;){
+                monedaDeposito.addObjeto(new Moneda1());
+                vuelto -= 1;
+            }
+        }
+    }
 
 }
