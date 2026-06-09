@@ -212,44 +212,29 @@ public class Expendedor {
      * @param vuelto es la cantidad de vuelto que ha de ser almacenado
      */
     public void manejarVuelto(int vuelto){
-
-        /**
-         * Si el vuelto es mas grande que 2000, almacenamos monedas de 2000 hasta que el vuelo sea menor a 2000
-         * cada vez que almacenamos una moneda, sustraemos el valor de dicha moneda al vuelto
-         */
-        if (vuelto>2000){
-            for (int i = 2000; i < vuelto;){
-                monedaDeposito.addObjeto(new Moneda2000());
-                vuelto -= 2000;
-            }
-        }
-        /**
-         * Los demás ciclos de abajo funcionan de forma similar al de arriba, solo que en vez de con 2000, se verifican los otros posibles valores de Monedas
-         */
-        if (vuelto>1000){
-            for (int i = 1000; i < vuelto;){
-                monedaDeposito.addObjeto(new Moneda1000());
-                vuelto -= 1000;
-            }
+        while (vuelto >= 2000){
+            monedaDeposito.addObjeto(new Moneda2000());
+            vuelto -= 2000;
         }
 
-        if (vuelto>500){
-            for (int i = 500; i < vuelto;){
-                monedaDeposito.addObjeto(new Moneda500());
-                vuelto -= 500;
-            }
+        while (vuelto >= 1000){
+            monedaDeposito.addObjeto(new Moneda1000());
+            vuelto -= 1000;
         }
-        if (vuelto>100){
-            for (int i = 100; i < vuelto;){
-                monedaDeposito.addObjeto(new Moneda100());
-                vuelto -= 100;
-            }
+
+        while (vuelto >= 500){
+            monedaDeposito.addObjeto(new Moneda500());
+            vuelto -= 500;
         }
-        if (vuelto>1){
-            for (int i = 1; i < vuelto;){
-                monedaDeposito.addObjeto(new Moneda1());
-                vuelto -= 1;
-            }
+
+        while (vuelto >= 100){
+            monedaDeposito.addObjeto(new Moneda100());
+            vuelto -= 100;
+        }
+
+        while (vuelto >= 1){
+            monedaDeposito.addObjeto(new Moneda1());
+            vuelto -= 1;
         }
     }
 
