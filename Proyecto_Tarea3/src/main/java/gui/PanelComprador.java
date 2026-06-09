@@ -349,8 +349,8 @@ public class PanelComprador {
     private void reiniciar() {
         productoElegido = null; //Limpiar el producto elegido anteriormente
         paso    = Paso.PRODUCTO; //Volver al primer paso
-        mensaje = "Elige un producto";
-        vueltoAcumulado = 0;//Restablecer el mensaje inicial
+        mensaje = "Elige un producto"; //Restablecer el mensaje inicial
+        vueltoAcumulado = 0; //Limpiar el total de vuelto acumulado
     }
 
     /**
