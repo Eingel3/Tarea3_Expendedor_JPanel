@@ -316,7 +316,7 @@ public class PanelComprador {
 
             Moneda devuelta;
             while ((devuelta = expendedor.getVuelto()) != null) { //Recoger todo el vuelto del expendedor
-                dinero          += devuelta.getValor(); //Sumar el vuelto al dinero disponible
+                dinero += devuelta.getValor(); //Sumar el vuelto al dinero disponible
                 vueltoAcumulado += devuelta.getValor(); //Acumular el total de vuelto recibido
             }
             mensaje = "Compra exitosa: " + ultimoProducto
@@ -349,7 +349,8 @@ public class PanelComprador {
     private void reiniciar() {
         productoElegido = null; //Limpiar el producto elegido anteriormente
         paso    = Paso.PRODUCTO; //Volver al primer paso
-        mensaje = "Elige un producto"; //Restablecer el mensaje inicial
+        mensaje = "Elige un producto";
+        vueltoAcumulado = 0;//Restablecer el mensaje inicial
     }
 
     /**
@@ -361,12 +362,10 @@ public class PanelComprador {
      */
     private Moneda crearMoneda(int valor) {
         switch (valor) {
-            case 1: return new Moneda1(); //moneda 1 unidad
-            case 100:  return new Moneda100(); //Moneda de cien unidades
-            case 500:  return new Moneda500(); //Moneda de quinientas unidades
-            case 1000: return new Moneda1000(); //Billete de mil unidades
-            case 2000: return new Moneda2000(); //Billete dos mil unidades
-            default:   return new Moneda2000(); //Billete de dos mil unidades
+            case 100:  return new Moneda100(); //Moneda de cien pesos
+            case 500:  return new Moneda500(); //Moneda de quinientos pesos
+            case 1000: return new Moneda1000(); //Billete de mil pesos
+            default:   return new Moneda2000(); //Billete de dos mil pesos
         }
     }
 
