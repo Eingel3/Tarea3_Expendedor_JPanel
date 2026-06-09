@@ -60,6 +60,30 @@ public class Expendedor {
     }
 
     /**
+     * Re llenar los depositos solo si estan vacios
+     * @param cantProducto es la cantidad de productos con las que se desean rellenar los depositos vacios
+     */
+    public void llenarDepositosVacios(int cantProducto){
+        for(int i = 0; i < cantProducto; i++){
+            if coca.isEmpty() {
+                coca.addObjeto(new CocaCola(InformacionProducto.COCACOLA.getTipo() * 100 + i));
+            }
+            if (fanta.isEmpty()){
+                fanta.addObjeto(new Fanta(InformacionProducto.FANTA.getTipo()*100 + i));
+            }
+            if (super8.isEmpty()){
+                super8.addObjeto(new Super8(InformacionProducto.SUPER8.getTipo()*100 + i));
+            }
+            if (sprite.isEmpty()){
+                sprite.addObjeto(new Sprite(InformacionProducto.SPRITE.getTipo()*100 + i));
+            }
+            if (snicker.isEmpty()){
+                snicker.addObjeto(new Snicker(InformacionProducto.SNICKER.getTipo()*100 + i));
+            }
+        }
+    }
+
+    /**
      *
      * @param tipo es el tipo de producto
      * @param pago es la moneda con la cual se comprara el producto
