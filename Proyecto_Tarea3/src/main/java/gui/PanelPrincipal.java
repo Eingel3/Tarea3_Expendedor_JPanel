@@ -20,14 +20,14 @@ public class PanelPrincipal extends JPanel implements MouseListener {
         this.addMouseListener(this); //Listener del panel
         Expendedor expendedor = new Expendedor(5); //Instancia del expendedor
         exp = new PanelExpendedor(30,80,expendedor); //Sub panel expendedor
-        com = new PanelComprador(); //Sub panel comprador (Falta implementar el funcionamiento de com)
+        com = new PanelComprador(370,80, expendedor); //Sub panel comprador (Falta implementar el funcionamiento de com)
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g); //Limpia la pantalla y pinta el fondo blanco
         exp.paintComponent(g); //Pinta el expendedor
-        //com.paintComponent(g); //Pinta el comprador (Falta implementar el funcionamiento de com
+        com.paintComponent(g); //Pinta el comprador (Falta implementar el funcionamiento de com
     }
 
     @Override
@@ -36,7 +36,8 @@ public class PanelPrincipal extends JPanel implements MouseListener {
         int mouseY = e.getY();
 
         exp.manejarClick(mouseX, mouseY); //Llamamos al metodo manejarClick del expendedor
-
+        com.manejarClick(mouseX, mouseY);
+        repaint();
     }
 
     @Override public void mousePressed(MouseEvent e)  {}
