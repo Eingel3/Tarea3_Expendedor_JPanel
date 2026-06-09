@@ -361,10 +361,12 @@ public class PanelComprador {
      */
     private Moneda crearMoneda(int valor) {
         switch (valor) {
-            case 100:  return new Moneda100(); //Moneda de cien pesos
-            case 500:  return new Moneda500(); //Moneda de quinientos pesos
-            case 1000: return new Moneda1000(); //Billete de mil pesos
-            default:   return new Moneda2000(); //Billete de dos mil pesos
+            case 1: return new Moneda1(); //moneda 1 unidad
+            case 100:  return new Moneda100(); //Moneda de cien unidades
+            case 500:  return new Moneda500(); //Moneda de quinientas unidades
+            case 1000: return new Moneda1000(); //Billete de mil unidades
+            case 2000: return new Moneda2000(); //Billete dos mil unidades
+            default:   return new Moneda2000(); //Billete de dos mil unidades
         }
     }
 
