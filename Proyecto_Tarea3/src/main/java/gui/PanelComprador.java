@@ -10,6 +10,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * Representa el panel gráfico del comprador dentro de la interfaz del expendedor.
+ * <p>
+ * Esta clase se encarga de dibujar la sección del comprador, mostrar los productos
+ * disponibles, permitir la selección de un producto, recibir una moneda simulada
+ * y procesar la compra mediante una instancia compartida de {@link Expendedor}.
+ * </p>
+ * <p>
+ * El flujo de compra se organiza en pasos: selección de producto, selección de
+ * moneda y visualización del resultado final.
+ * </p>
+ */
 public class PanelComprador {
 
     private int x, y; //Posición del panel dentro de PanelPrincipal
@@ -18,7 +30,16 @@ public class PanelComprador {
 
     private final Expendedor expendedor; //Referencia al modelo compartido
 
+    /**
+     * Estados posibles del flujo de compra.
+     * <ul>
+     *     <li>{@code PRODUCTO}: el usuario debe seleccionar un producto.</li>
+     *     <li>{@code MONEDA}: el usuario debe seleccionar una moneda para pagar.</li>
+     *     <li>{@code FIN}: se muestra el resultado de la compra y se espera reinicio.</li>
+     * </ul>
+     */
     private enum Paso { PRODUCTO, MONEDA, FIN } //Estados del flujo de compra
+
     private Paso paso; //Paso actual del flujo
 
     private InformacionProducto productoElegido; //Producto seleccionado por el usuario
@@ -54,6 +75,17 @@ public class PanelComprador {
 
     private static final int[] MONEDAS = { 100, 500, 1000, 2000 }; //Denominaciones disponibles
 
+    /**
+     * Crea un nuevo panel de comprador ubicado en la posición indicada.
+     * <p>
+     * Inicializa el dinero disponible del comprador, el vuelto acumulado,
+     * el estado inicial del flujo de compra y carga las imágenes de los productos.
+     * </p>
+     *
+     * @param x coordenada horizontal del panel dentro del panel principal.
+     * @param y coordenada vertical del panel dentro del panel principal.
+     * @param expendedor instancia compartida del expendedor utilizada para procesar compras.
+     */
     public PanelComprador(int x, int y, Expendedor expendedor) {
         this.x              = x; //Posición horizontal dentro del panel principal
         this.y              = y; //Posición vertical dentro del panel principal
@@ -65,6 +97,14 @@ public class PanelComprador {
         cargarImagenes(); //Intentar cargar los pngs desde resources/
     }
 
+    /**
+     * Carga las imágenes PNG de los productos desde el classpath.
+     * <p>
+     * Si alguna imagen no puede cargarse, su posición en el arreglo queda como
+     * {@code null}, permitiendo que el panel continúe funcionando sin detener
+     * la ejecución.
+     * </p>
+     */
     private void cargarImagenes() {
         for (int i = 0; i < ARCHIVOS_PNG.length; i++) { //Recorre los nombres de archivos
             try {
@@ -77,6 +117,16 @@ public class PanelComprador {
         }
     }
 
+    /**
+     * Dibuja el panel del comprador y todos sus elementos gráficos.
+     * <p>
+     * Este método muestra el estado actual del comprador, incluyendo dinero
+     * disponible, vuelto acumulado, productos seleccionables, botones de monedas,
+     * botón de cancelación cuando corresponde y mensajes de retroalimentación.
+     * </p>
+     *
+     * @param g contexto gráfico utilizado para dibujar los componentes del panel.
+     */
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g; //Cast para usar funciones de Graphics2D
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //Bordes suavizados
@@ -185,6 +235,17 @@ public class PanelComprador {
         }
     }
 
+    /**
+     * Maneja los clicks realizados por el usuario dentro del panel del comprador.
+     * <p>
+     * Según el estado actual del flujo, este método permite seleccionar un producto,
+     * cancelar una compra, seleccionar una moneda o reiniciar una nueva compra
+     * después de finalizar la anterior.
+     * </p>
+     *
+     * @param mx coordenada horizontal del click del mouse.
+     * @param my coordenada vertical del click del mouse.
+     */
     public void manejarClick(int mx, int my) {
         if (mx < x || mx > x + ANCHO || my < y || my > y + ALTO) return; //Ignorar clicks fuera del panel
 
@@ -228,6 +289,16 @@ public class PanelComprador {
         }
     }
 
+    /**
+     * Procesa la compra del producto seleccionado usando una moneda del valor indicado.
+     * <p>
+     * El método verifica si el comprador posee suficiente dinero, crea la moneda
+     * correspondiente, solicita la compra al expendedor, recoge el producto y acumula
+     * el vuelto entregado. También actualiza el mensaje de estado según el resultado.
+     * </p>
+     *
+     * @param valorMoneda valor de la moneda seleccionada por el usuario.
+     */
     private void procesarCompra(int valorMoneda) {
         if (dinero < valorMoneda) { //Verificar que el comprador tiene suficiente dinero
             mensaje = "No tienes $" + valorMoneda + " disponibles";
@@ -268,12 +339,26 @@ public class PanelComprador {
         paso = Paso.FIN; //Mostrar el resultado al usuario
     }
 
+    /**
+     * Reinicia el flujo de compra para permitir una nueva operación.
+     * <p>
+     * Limpia el producto seleccionado, vuelve al paso de selección de producto
+     * y restablece el mensaje inicial.
+     * </p>
+     */
     private void reiniciar() {
         productoElegido = null; //Limpiar el producto elegido anteriormente
         paso    = Paso.PRODUCTO; //Volver al primer paso
         mensaje = "Elige un producto"; //Restablecer el mensaje inicial
     }
 
+    /**
+     * Crea una instancia de {@link Moneda} según el valor recibido.
+     *
+     * @param valor valor monetario solicitado.
+     * @return una moneda correspondiente al valor indicado. Si el valor no coincide
+     * con 100, 500 o 1000, se retorna una moneda de 2000.
+     */
     private Moneda crearMoneda(int valor) {
         switch (valor) {
             case 100:  return new Moneda100(); //Moneda de cien pesos
@@ -283,6 +368,12 @@ public class PanelComprador {
         }
     }
 
+    /**
+     * Retorna el nombre legible de un producto a partir de su información.
+     *
+     * @param p producto cuya representación en texto se desea obtener.
+     * @return nombre visible del producto para mostrar en la interfaz.
+     */
     private String nombreProducto(InformacionProducto p) { //Retorna el nombre legible del producto
         switch (p) {
             case COCACOLA: return "Coca-Cola";
