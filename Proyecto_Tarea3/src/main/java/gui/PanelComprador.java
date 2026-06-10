@@ -308,11 +308,11 @@ public class PanelComprador {
 
         Moneda moneda = crearMoneda(valorMoneda); //Crear la instancia de moneda correspondiente
         try {
+            dinero          -= valorMoneda; //Descontar el valor de la moneda insertada
             expendedor.comprarProducto(productoElegido.getTipo(), moneda); //Intentar la compra en el expendedor
 
             Producto producto = expendedor.getProducto(); //Sacar el producto del depósito especial
             ultimoProducto   = (producto != null) ? producto.consumir() : nombreProducto(productoElegido);
-            dinero          -= valorMoneda; //Descontar el valor de la moneda insertada
 
             Moneda devuelta;
             while ((devuelta = expendedor.getVuelto()) != null) { //Recoger todo el vuelto del expendedor
