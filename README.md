@@ -9,7 +9,8 @@ Tarea 3 de la asignatura de desarrollo orientado a objetos, hecha íntegramente 
 
 
 #Diagrama UML:
-<img width="6000" height="3375" alt="UMLExpendedor Jpanel" src="https://github.com/user-attachments/assets/86eb4313-737f-4874-b426-a1525c31bef9" />
+<img width="6000" height="3375" alt="UMLExpendedor Jpanel (1)" src="https://github.com/user-attachments/assets/b74af3f4-a0c8-4a93-a35c-f812c9c3a0e5" />
+
 
 Link al diseño en la página web de canva.com: https://canva.link/771zeideb9yazi6
 
