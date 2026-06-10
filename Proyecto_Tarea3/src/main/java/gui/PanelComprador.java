@@ -159,7 +159,7 @@ public class PanelComprador {
 
         g2.setFont(new Font("Arial", Font.BOLD, 10)); //Fuente para el label de sección
         g2.setColor(Color.DARK_GRAY); //Color del label
-        g2.drawString((paso == Paso.PRODUCTO) ? "▶ PRODUCTO" : "  PRODUCTO", x + 14, y + TARJETA_Y - 6); //Indica si es el paso activo
+        g2.drawString((paso == Paso.PRODUCTO) ? "▶ PRODUCTO" : "  PRODUCTO", x + 14, y + TARJETA_Y - 6); //Indica si es el paso activo (si no se entiende la syntax es el op. ternario, reduce un if/else a una sola línea)
 
         g2.setFont(new Font("Arial", Font.BOLD, 9)); //Fuente para el texto dentro de las tarjetas
         for (int i = 0; i < PRODUCTOS.length; i++) {
