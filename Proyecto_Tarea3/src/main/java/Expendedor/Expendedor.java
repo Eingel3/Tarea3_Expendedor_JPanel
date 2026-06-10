@@ -266,4 +266,18 @@ public class Expendedor {
         }
     }
 
+    public int getCantidadProductos(InformacionProducto tipo) {
+        switch (tipo) {
+            case COCACOLA: return coca.size();
+            case SPRITE:   return sprite.size();
+            case FANTA:    return fanta.size();
+            case SNICKER:  return snicker.size();
+            case SUPER8:   return super8.size();
+            default:       return 0;
+        }
+    }
+
+    public int getCantidadVuelto() {
+        return monedaDeposito.size();
+    }
 }

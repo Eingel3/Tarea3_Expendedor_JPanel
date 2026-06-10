@@ -8,6 +8,8 @@ import Productos.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 /**
@@ -29,6 +31,7 @@ public class PanelComprador {
     private static final int ALTO  = 490; //Alto del panel del comprador
 
     private final Expendedor expendedor; //Referencia al modelo compartido
+    private PanelExpendedor panelExpendedor; //Referencia a la vista del expendedor para refrescar
 
     /**
      * Estados posibles del flujo de compra.
@@ -85,11 +88,13 @@ public class PanelComprador {
      * @param x coordenada horizontal del panel dentro del panel principal.
      * @param y coordenada vertical del panel dentro del panel principal.
      * @param expendedor instancia compartida del expendedor utilizada para procesar compras.
+     * @param panelExpendedor referencia a la vista del expendedor para actualizar tras compra.
      */
-    public PanelComprador(int x, int y, Expendedor expendedor) {
+    public PanelComprador(int x, int y, Expendedor expendedor, PanelExpendedor panelExpendedor) {
         this.x              = x; //Posición horizontal dentro del panel principal
         this.y              = y; //Posición vertical dentro del panel principal
         this.expendedor     = expendedor; //Referencia al expendedor compartido con PanelExpendedor
+        this.panelExpendedor = panelExpendedor; //Referencia para refrescar la vista del expendedor
         this.dinero         = 5000; //El comprador empieza con $5000
         this.vueltoAcumulado = 0; //Todavía no ha recibido vuelto
         this.paso           = Paso.PRODUCTO; //Estado inicial: eligiendo producto
@@ -314,13 +319,21 @@ public class PanelComprador {
             Producto producto = expendedor.getProducto(); //Sacar el producto del depósito especial
             ultimoProducto   = (producto != null) ? producto.consumir() : nombreProducto(productoElegido);
 
+            int vueltoCompra = 0;
             Moneda devuelta;
             while ((devuelta = expendedor.getVuelto()) != null) { //Recoger todo el vuelto del expendedor
                 dinero += devuelta.getValor(); //Sumar el vuelto al dinero disponible
                 vueltoAcumulado += devuelta.getValor(); //Acumular el total de vuelto recibido
+                vueltoCompra += devuelta.getValor();
             }
             mensaje = "Compra exitosa: " + ultimoProducto
                     + (producto != null ? " #" + producto.getSerie() : ""); //Mostrar nombre y número de serie
+
+            if (panelExpendedor != null) {
+                panelExpendedor.setProductoComprado(new VistaProducto(0, 0, 100, 30, ultimoProducto));
+                panelExpendedor.setVueltoMonto(vueltoCompra);
+                panelExpendedor.refreshDesdeModelo();
+            }
 
         } catch (PagoInsuficienteException e) {
             Moneda devuelta = expendedor.getVuelto(); //El expendedor devuelve la moneda rechazada
@@ -331,6 +344,10 @@ public class PanelComprador {
             Moneda devuelta = expendedor.getVuelto(); //El expendedor devuelve la moneda si no hay stock
             if (devuelta != null) dinero += devuelta.getValor(); //Recuperar la moneda sin descontar
             mensaje = "Sin stock de " + nombreProducto(productoElegido);
+
+            if (panelExpendedor != null) {
+                panelExpendedor.refreshDesdeModelo();
+            }
 
         } catch (PagoIncorrectoException e) {
             mensaje = "Error de pago"; //No debería ocurrir ya que la moneda nunca es null aquí

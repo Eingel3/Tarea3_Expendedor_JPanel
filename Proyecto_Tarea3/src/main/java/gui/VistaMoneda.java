@@ -1,7 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import Monedas.Moneda;
 
@@ -52,13 +55,18 @@ public class VistaMoneda {
      * @param g contexto grafico de Swing/AWT
      */
     public void paint(Graphics g) {
-        g.setColor(new Color(240, 200, 80));
-        g.fillOval(x, y, diametro, diametro);
-        g.setColor(Color.BLACK);
-        g.drawOval(x, y, diametro, diametro);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(new Color(255, 230, 130));
+        g2.fillOval(x, y, diametro, diametro);
+        g2.setColor(Color.GRAY);
+        g2.drawOval(x, y, diametro, diametro);
 
         if (moneda != null) {
-            g.drawString(String.valueOf(moneda.getValor()), x + 4, y + (diametro / 2) + 4);
+            g2.setFont(new Font("Arial", Font.BOLD, 10));
+            g2.setColor(Color.BLACK);
+            g2.drawString(String.valueOf(moneda.getValor()), x + 4, y + (diametro / 2) + 4);
         }
     }
 

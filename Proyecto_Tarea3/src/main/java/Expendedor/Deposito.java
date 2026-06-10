@@ -48,15 +48,11 @@ public class Deposito<T>{
 	 * Metodo que indica si el almacen esta vacio
 	 * @return True si almacen está vacío, False si contiene algun objeto
 	 */
-	public boolean isEmpty(){ //Para que otros metodos puedan ver si esta vacio
+    public boolean isEmpty(){ //Para que otros metodos puedan ver si esta vacio
 		return almacen.isEmpty();
 	}
 
-	/**
-	 * Metodo para saber la cantidad de objetos que hay en el deposito
-	 * @return retorna una variable int que indica la cantidad de objetos que hay en el deposito
-	 */
-	public int cantidadObjetos(){
+	public int size() {
 		return almacen.size();
 	}
 }
