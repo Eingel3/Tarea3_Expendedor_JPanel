@@ -12,3 +12,14 @@ Tarea 3 de la asignatura de desarrollo orientado a objetos, hecha íntegramente 
 
 
 Link al diseño en la página web de canva.com: https://canva.link/771zeideb9yazi6
+
+
+# Funcionalidades:
+
+Para utilizar el programa, por favor ejecute la clase "Main", una ventana se iniciará en la que se podrán comprar distintos tipos de productos.
+
+# Si desea modificar el precio de los prodctos: 
+
+Por favor, dirigirse al archivo llamado "InformacionProducto.java" dentro de la carpeta "Productos", en dicho archivo, se pueden modificar los precios de cada producto. 
+Ejemplo: FANTA(500, 13); ....> FANTA(100, 13); cambia el precio de la Bebida Fanta a 100.
+
