@@ -1,7 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,19 +76,25 @@ public class PanelDeposito {
      * @param g contexto grafico de Swing/AWT
      */
     public void paintComponent(Graphics g) {
-        g.setColor(new Color(210, 210, 210));
-        g.fillRect(x, y, ancho, alto);
-        g.setColor(Color.DARK_GRAY);
-        g.drawRect(x, y, ancho, alto);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.drawString(etiqueta, x + 8, y + 16);
+        g2.setColor(Color.WHITE);
+        g2.fillRoundRect(x, y, ancho, alto, 8, 8);
+
+        g2.setColor(Color.GRAY);
+        g2.drawRoundRect(x, y, ancho, alto, 8, 8);
+
+        g2.setFont(new Font("Arial", Font.BOLD, 11));
+        g2.setColor(Color.DARK_GRAY);
+        g2.drawString(etiqueta, x + 8, y + 16);
 
         for (VistaProducto producto : productos) {
-            producto.paint(g);
+            producto.paint(g2);
         }
 
         for (VistaMoneda moneda : monedas) {
-            moneda.paint(g);
+            moneda.paint(g2);
         }
     }
 

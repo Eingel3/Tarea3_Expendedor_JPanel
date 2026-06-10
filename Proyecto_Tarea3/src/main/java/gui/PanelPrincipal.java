@@ -26,8 +26,8 @@ import java.awt.event.*;
  * </p>
  */
 public class PanelPrincipal extends JPanel implements MouseListener {
-    private final int ANCHO = 950; //Ancho del panel en pixeles
-    private final int ALTO = 600; //Alto del panel en pixeles
+    private final int ANCHO = 1000; //Ancho del panel en pixeles
+    private final int ALTO = 620; //Alto del panel en pixeles
 
     private PanelExpendedor exp; //Instancia de segmento del panel correspondiente al expendedor
     private PanelComprador com; //Instancia de segmento del panel correspondiente al comprador
@@ -45,8 +45,9 @@ public class PanelPrincipal extends JPanel implements MouseListener {
         this.setBackground(Color.WHITE); //Color de fondo del panel
         this.addMouseListener(this); //Listener del panel
         Expendedor expendedor = new Expendedor(5); //Instancia del expendedor
-        exp = new PanelExpendedor(30, 80, expendedor); //Sub panel expendedor
-        com = new PanelComprador(370, 80, expendedor); //Sub panel comprador
+        exp = new PanelExpendedor(50, 80, expendedor); //Sub panel expendedor
+        com = new PanelComprador(520, 80, expendedor, exp); //Sub panel comprador
+        exp.refreshDesdeModelo(); //Mostrar stock inicial
     }
 
     /**

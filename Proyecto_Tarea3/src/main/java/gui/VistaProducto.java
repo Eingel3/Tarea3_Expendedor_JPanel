@@ -1,7 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * Representa la vista grafica de un producto dentro de la interfaz.
@@ -52,11 +55,17 @@ public class VistaProducto {
      * @param g contexto de dibujo de Swing/AWT
      */
     public void paint(Graphics g) {
-        g.setColor(new Color(80, 170, 120));//como un verde claro
-        g.fillRect(x, y, ancho, alto);
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, ancho, alto);
-        g.drawString(etiqueta, x + 5, y + (alto / 2) + 4);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(new Color(225, 252, 255));
+        g2.fillRoundRect(x, y, ancho, alto, 8, 8);
+        g2.setColor(Color.CYAN.darker());
+        g2.drawRoundRect(x, y, ancho, alto, 8, 8);
+
+        g2.setFont(new Font("Arial", Font.BOLD, 10));
+        g2.setColor(Color.BLACK);
+        g2.drawString(etiqueta, x + 5, y + (alto / 2) + 4);
     }
 
     /**

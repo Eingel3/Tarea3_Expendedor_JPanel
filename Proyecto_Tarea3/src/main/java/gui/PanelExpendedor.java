@@ -1,11 +1,15 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
 import Expendedor.Expendedor;
+import Productos.InformacionProducto;
 
 /**
  * Representa la vista grafica del expendedor completo.
@@ -59,8 +63,8 @@ public class PanelExpendedor {
 
         crearDepositos();
 
-        this.depositoProductoComprado = new PanelDeposito(x + 220, y + 20, 160, 80, "Producto comprado");
-        this.depositoVuelto = new PanelDeposito(x + 220, y + 120, 160, 160, "Vuelto");
+        this.depositoProductoComprado = new PanelDeposito(x + 220, y + 50, 160, 80, "Producto comprado");
+        this.depositoVuelto = new PanelDeposito(x + 220, y + 150, 160, 160, "Vuelto");
     }
 
     /**
@@ -70,11 +74,11 @@ public class PanelExpendedor {
      * Super8 con posiciones fijas dentro del panel.
      */
     private void crearDepositos() {
-        depositos.add(new PanelDeposito(x + 20, y + 20, 150, 50, "CocaCola"));
-        depositos.add(new PanelDeposito(x + 20, y + 90, 150, 50, "Sprite"));
-        depositos.add(new PanelDeposito(x + 20, y + 160, 150, 50, "Fanta"));
-        depositos.add(new PanelDeposito(x + 20, y + 230, 150, 50, "Snickers"));
-        depositos.add(new PanelDeposito(x + 20, y + 300, 150, 50, "Super8"));
+        depositos.add(new PanelDeposito(x + 20, y + 50, 150, 50, "CocaCola"));
+        depositos.add(new PanelDeposito(x + 20, y + 120, 150, 50, "Sprite"));
+        depositos.add(new PanelDeposito(x + 20, y + 190, 150, 50, "Fanta"));
+        depositos.add(new PanelDeposito(x + 20, y + 260, 150, 50, "Snickers"));
+        depositos.add(new PanelDeposito(x + 20, y + 330, 150, 50, "Super8"));
     }
 
     /**
@@ -86,19 +90,28 @@ public class PanelExpendedor {
      * @param g contexto grafico utilizado por Swing/AWT
      */
     public void paintComponent(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.fillRect(x, y, ancho, alto);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, ancho, alto);
-        g.drawString("Expendedor", x + 12, y + 18);
+        g2.setColor(Color.LIGHT_GRAY);
+        g2.fillRoundRect(x, y, ancho, alto, 14, 14);
+
+        g2.setColor(Color.GRAY);
+        g2.drawRoundRect(x, y, ancho, alto, 14, 14);
+
+        g2.setFont(new Font("Arial", Font.BOLD, 13));
+        g2.setColor(Color.BLACK);
+        g2.drawString("EXPENDEDOR", x + ancho / 2 - 42, y + 22);
+
+        g2.setColor(Color.GRAY);
+        g2.drawLine(x + 10, y + 32, x + ancho - 10, y + 32);
 
         for (PanelDeposito d : depositos) {
-            d.paintComponent(g);
+            d.paintComponent(g2);
         }
 
-        depositoProductoComprado.paintComponent(g);
-        depositoVuelto.paintComponent(g);
+        depositoProductoComprado.paintComponent(g2);
+        depositoVuelto.paintComponent(g2);
     }
 
     /**
@@ -200,6 +213,15 @@ public class PanelExpendedor {
     }
 
     /**
+     * Muestra el monto total de vuelto como texto en el deposito.
+     *
+     * @param monto cantidad de dinero devuelta
+     */
+    public void setVueltoMonto(int monto) {
+        depositoVuelto.setEtiqueta("Vuelto: $" + monto);
+    }
+
+    /**
      * Sincroniza la vista con el estado del modelo de logica.
      *
      * Metodo reservado para conectar la vista con {@code Expendedor} sin
@@ -208,6 +230,19 @@ public class PanelExpendedor {
     public void refreshDesdeModelo() {
         if (expendedor == null) {
             return;
+        }
+
+        InformacionProducto[] tipos = {
+            InformacionProducto.COCACOLA,
+            InformacionProducto.SPRITE,
+            InformacionProducto.FANTA,
+            InformacionProducto.SNICKER,
+            InformacionProducto.SUPER8
+        };
+
+        for (int i = 0; i < tipos.length; i++) {
+            depositos.get(i).setEtiqueta(
+                tipos[i].getNombre() + ": " + expendedor.getCantidadProductos(tipos[i]));
         }
     }
 }
